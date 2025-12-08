@@ -1780,6 +1780,18 @@ if (slotStart.getDay() === 6 && slotStart.getHours() === 9) {
     continue;
 }
 
+// ★ 当日はすべて✕（追加）
+const today = new Date();
+today.setHours(0,0,0,0);
+const targetDay = new Date(slotStart);
+targetDay.setHours(0,0,0,0);
+
+if (today.getTime() === targetDay.getTime()) {
+    cell.textContent = '✕';
+    cell.classList.add('unavailable');
+    continue;
+}
+
                     // 18時以降に終了する予約は✕
                     if (slotEnd.getHours() === 16 && slotEnd.getMinutes() > 0 || slotEnd.getHours() > 16) {
                         cell.textContent = '✕';
