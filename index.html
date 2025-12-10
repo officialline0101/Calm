@@ -991,7 +991,7 @@
     </div>
 
     <div class="container">
-        <h1>Clam予約フォーム
+        <h1>Calm予約フォーム
         </h1>
         <div class="label">お客様名<span class="required">必須</span></div>
         <input type="text" id="name" placeholder="お名前を入力してください" oninput="saveInput('name')">
@@ -1026,6 +1026,7 @@
                 <button type="button" onclick="selectSymptom(this, 'treatment1')" data-category="自爪育成" data-price="0">育成クリアジェル</button>
                 <button type="button" onclick="selectSymptom(this, 'treatment2')" data-category="自爪育成" data-price="0">育成ジェルワンカラー</button>
                 <button type="button" onclick="selectSymptom(this, 'treatment3')" data-category="自爪育成" data-price="0">深爪育成クリア</button>
+                <button type="button" onclick="selectSymptom(this, 'treatment9')" data-category="自爪育成" data-price="0">自爪育成ケア</button>
             </div>
         </div>
 
@@ -1137,6 +1138,7 @@
         let selectedirradiationsTime = 0; // 訪問回数で選択された時間
 
         let menuTimes = {
+            '自爪育成ケア': 90,
             '育成クリアジェル': 120,
             '育成ジェルワンカラー': 120,
             '深爪育成クリア': 180,
@@ -1349,6 +1351,8 @@
                     html = `<div style="text-align: left;"><strong>所要時間：90分</strong><br>※お時間が前後する場合がございます</div><div style="text-align: right;"><strong>料金：¥14,000</strong></div>`;
                 } else if (treatmentId === 'treatment8') {
                     html = `<div style="text-align: left;"><strong>所要時間：2h</strong><br>※お時間が前後する場合がございます</div><div style="text-align: right;"><strong>料金：¥16,000</strong></div>`;
+                } else if (treatmentId === 'treatment9') {
+                    html = `<div style="text-align: left;"><strong>所要時間：60分</strong><br>※お時間が前後する場合がございます</div><div style="text-align: right;"><strong>料金：¥6,600</strong></div>`;
                 }
 
                 // 内容が用意できた時だけ移動＆表示
