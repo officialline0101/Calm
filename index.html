@@ -1627,7 +1627,7 @@
 // selectedSymptomを文字列に整形
             // グローバル変数の selectedSymptom を直接参照します
             const selectedSymptomText = selectedSymptom.length > 0
-                ? selectedSymptom.map(item => ${item.name}`).join(', ')
+                ? selectedSymptom.map(item => `${item.name}`).join(', ')
                 : 'メニュー未選択';
 
             // irradiationsCountの整形（nullチェック）
@@ -2016,6 +2016,7 @@ if (today.getTime() === targetDay.getTime()) {
 </body>
 
 </html>
+
 
 
 
