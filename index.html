@@ -1603,6 +1603,7 @@
                 name: document.getElementById('name').value.trim(),
                 phone: document.getElementById('phone').value.trim(),
                 visitCount: visitCount,
+                selectedSymptom: selectedSymptom && selectedSymptom.length > 0 ? selectedSymptom : null, // 空の選択肢をチェック
                 dates: selectedFullDate ? [selectedFullDate] : null, // 空チェック
                 message: document.getElementById('message').value.trim()
             };
@@ -1618,19 +1619,15 @@
                 return;
             }
 
-            if (!formData.selectedSymptom) {
-                alert('メニューを選択してください。');
-                return;
-            }
-
             if (!formData.dates) {
                 alert('希望日時を選択してください。');
                 return;
             }
 
-            // selectedSymptomを文字列に整形
-            const selectedSymptomText = formData.selectedSymptom
-                ? formData.selectedSymptom.map(item => `${item.name}`).join(',')
+// selectedSymptomを文字列に整形
+            // グローバル変数の selectedSymptom を直接参照します
+            const selectedSymptomText = selectedSymptom.length > 0
+                ? selectedSymptom.map(item => `${item.name}`).join(', ')
                 : 'メニュー未選択';
 
             // irradiationsCountの整形（nullチェック）
@@ -1670,7 +1667,7 @@
                 return;
             }
 
-            const url = 'https://script.google.com/macros/s/AKfycbwCxnJaxGZ46c3TnnesuZcD_zuxuVoSHoDHo5MxkRzChcK5vZDwBs4HstzkXO-KLyuDYA/exec' +
+            const url = 'https://script.google.com/macros/s/AKfycbxhBwldtFmrK-13qKxG5Zeu7VmQS1YjrkoNA9fdv_Uar7baLl8Kl9hwfBEd0wvHW9OSWw/exec' +
                 `?startTime=${startTime.toISOString()}&endTime=${endTime.toISOString()}`;
 
             try {
@@ -1841,6 +1838,7 @@ if (today.getTime() === targetDay.getTime()) {
                             }
                         });
                         if (overlapping >= 3) {
+                        if (overlapping >= 2) {
                             overLimit = true;
                             break;
                         }
