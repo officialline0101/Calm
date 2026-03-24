@@ -1002,7 +1002,7 @@
 
         <div class="label">ご来店回数<span class="required">必須</span></div>
         <div class="visit-buttons">
-            <button type="button" id="firstVisit" onclick="selectVisit(this)">1回目</button>
+            <button type="button" id="firstVisit" onclick="selectVisit(this)">初めての方</button>
             <button type="button" id="repeatVisit" onclick="selectVisit(this)">2回目以降</button>
         </div>
 
@@ -1162,7 +1162,7 @@
 
         // 訪問回数ごとの時間設定 (例：初めて=20分、2回目以降=15分)
         let visitTimes = {
-            '1回目': 0,
+            '初めての方': 0,
             '2回目以降': 0
         };
 
@@ -1576,7 +1576,7 @@
             const btnCoupon = document.getElementById('btn-coupon');
             const couponSection = document.getElementById('coupon');
 
-            if (visitCount === '1回目') {
+            if (visitCount === '初めての方') {
                 if (btnCoupon) btnCoupon.style.display = ''; // 初期値(CSS設定)に戻す
             } else {
                 if (btnCoupon) btnCoupon.style.display = 'none';
