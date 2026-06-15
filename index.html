@@ -1013,6 +1013,7 @@
             <button type="button" onclick="showMenu('male')">自爪育成</button>
             <button type="button" onclick="showMenu('female')">デザイン</button>
             <button type="button" onclick="showMenu('care')">角質ケア</button>
+            <button type="button" onclick="showMenu('foot')">フットケア</button>
         </div>
 
         <!-- メニュー表示エリア（選択されたメニュー名がここに出る） -->
@@ -1079,6 +1080,19 @@
                     data-price="4400">甘皮ケア</button>
                 <button type="button" onclick="selectSymptom(this, 'treatment_care_2')" data-category="角質ケア"
                     data-price="3300">角質ケア</button>
+            </div>
+        </div>
+
+        <div id="foot" class="menu-section">
+            <div class="labeltyuuou">
+                <span class="highlight-text">◆フットケア◆</span>
+            </div>
+            <div class="info-text">▼メニューをお選びください▼</div>
+            <div class="symptoms">
+                <button type="button" onclick="selectSymptom(this, 'treatment_foot_1')" data-category="フットケア"
+                    data-price="8800">フットジェル</button>
+                <button type="button" onclick="selectSymptom(this, 'treatment_foot_2')" data-category="フットケア"
+                    data-price="5980">かかと美人 うる艶コース</button>
             </div>
         </div>
 
@@ -1188,7 +1202,9 @@
             '自爪育成クリア': 120,
             'シンプルデザイン': 90,
             '甘皮ケア': 60,
-            '角質ケア': 60
+            '角質ケア': 60,
+            'フットジェル': 90,
+            'かかと美人 うる艶コース': 70
         };
 
 
@@ -1403,6 +1419,10 @@
                     html = `<div style="text-align: left;"><strong>所要時間：1時間</strong><br>※お時間が前後する場合がございます</div><div style="text-align: right;"><strong>料金：¥4,400</strong></div>`;
                 } else if (treatmentId === 'treatment_care_2') {
                     html = `<div style="text-align: left;"><strong>所要時間：1時間</strong><br>※お時間が前後する場合がございます</div><div style="text-align: right;"><strong>料金：¥3,300</strong></div>`;
+                } else if (treatmentId === 'treatment_foot_1') {
+                    html = `<div style="text-align: left;"><strong>所要時間：60分</strong><br>・フットバス<br>・甘皮ケア<br>・爪の長さ・形整え<br>・ジェルネイル施術<br>・保湿仕上げ<br>※デザインやオフの有無により施術時間が前後する場合がございます</div><div style="text-align: right;"><strong>料金：¥8,800〜</strong></div>`;
+                } else if (treatmentId === 'treatment_foot_2') {
+                    html = `<div style="text-align: left;"><strong>所要時間：50分</strong><br>・フットバス<br>・足裏角質ケア<br>・かかとの硬くなった角質除去<br>・保湿トリートメント<br>・仕上げの保湿ケア<br>※お時間が前後する場合がございます</div><div style="text-align: right;"><strong>料金：¥5,980</strong><br>※フットジェル施術の方限定 ¥4,400</div>`;
                 }
 
                 // 内容が用意できた時だけ移動＆表示
