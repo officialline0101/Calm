@@ -1157,6 +1157,8 @@
         let selectedFullDate = '';
         let currentDate = new Date();
         let availabilityCache = {};
+        let isCalendarLoading = false; // カレンダー読み込み中フラグ
+        let latestFetchId = 0; // 最新の空き状況リクエストID
         let irradiationsCount = ''; <!-- 選択された症状を格納する変数 -->
         let totalAmount = 0; // 合計金額を格納する変数
         let menuPrice = 0; // メニューの価格
@@ -1666,8 +1668,13 @@
         }
 
         function selectDate(cell) {
-            // "unavailable" クラスが付いている場合はクリックを無効化
-            if (cell.classList.contains('unavailable')) {
+            // カレンダー読み込み中はクリックを無効化
+            if (isCalendarLoading) {
+                return;
+            }
+
+            // "unavailable" クラスが付いている場合、または日時未設定のセルはクリックを無効化
+            if (cell.classList.contains('unavailable') || !cell.getAttribute('data-date')) {
                 return; // 何もせずに終了
             }
 
@@ -1745,6 +1752,19 @@
             return `${date.getFullYear()}年${('0' + (date.getMonth() + 1)).slice(-2)}月${('0' + date.getDate()).slice(-2)}日 ${('0' + date.getHours()).slice(-2)}:${('0' + date.getMinutes()).slice(-2)}`;
         }
 
+        // 読み込み中の古いセルを空白にし、タップできない状態にする
+        function clearCalendarCells() {
+            const table = document.querySelector('#calendar1 table tbody');
+            for (let row of table.rows) {
+                for (let i = 1; i < row.cells.length; i++) {
+                    row.cells[i].textContent = '';
+                    row.cells[i].removeAttribute('data-date');
+                    row.cells[i].classList.remove('available', 'unavailable', 'selected');
+                }
+            }
+            updateCalendarHeader(currentDate);
+        }
+
         async function fetchAvailability(date) {
             const startTime = new Date(date);
             const endTime = new Date(date);
@@ -1752,15 +1772,23 @@
 
             const cacheKey = startTime.toISOString() + endTime.toISOString();
 
+            // 最新のリクエストかどうかを判定するためのID
+            const fetchId = ++latestFetchId;
+
             // キャッシュを確認
             if (availabilityCache[cacheKey]) {
                 console.log('Using cached data');
+                isCalendarLoading = false;
+                hideLoadingSpinner();
                 updateCalendar(availabilityCache[cacheKey].availability, availabilityCache[cacheKey].businessDays);
                 return;
             }
 
             const url = 'https://script.google.com/macros/s/AKfycbxhBwldtFmrK-13qKxG5Zeu7VmQS1YjrkoNA9fdv_Uar7baLl8Kl9hwfBEd0wvHW9OSWw/exec' +
                 `?startTime=${startTime.toISOString()}&endTime=${endTime.toISOString()}`;
+
+            isCalendarLoading = true;
+            clearCalendarCells();
 
             try {
                 showLoadingSpinner(); // Show loading spinner
@@ -1779,11 +1807,20 @@
                 // データをキャッシュに保存
                 availabilityCache[cacheKey] = { availability: data, businessDays: businessDays };
 
+                // 途中で別の週・月に切り替えられていたら、古い結果では描画しない
+                if (fetchId !== latestFetchId) {
+                    return;
+                }
+
                 updateCalendar(data, businessDays);
             } catch (error) {
                 console.error('Error fetching availability:', error);
             } finally {
-                hideLoadingSpinner(); // Hide loading spinner
+                // 最新のリクエストが終わった時だけ読み込み状態を解除
+                if (fetchId === latestFetchId) {
+                    isCalendarLoading = false;
+                    hideLoadingSpinner(); // Hide loading spinner
+                }
             }
         }
 
