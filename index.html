@@ -1014,6 +1014,7 @@
             <button type="button" onclick="showMenu('female')">デザイン</button>
             <button type="button" onclick="showMenu('care')">角質ケア</button>
             <button type="button" onclick="showMenu('foot')">フットケア</button>
+            <button type="button" onclick="showMenu('off')">オフ</button>
         </div>
 
         <!-- メニュー表示エリア（選択されたメニュー名がここに出る） -->
@@ -1093,6 +1094,17 @@
                     data-price="8800">フットジェル</button>
                 <button type="button" onclick="selectSymptom(this, 'treatment_foot_2')" data-category="フットケア"
                     data-price="5980">かかと美人 うる艶コース</button>
+            </div>
+        </div>
+
+        <div id="off" class="menu-section">
+            <div class="labeltyuuou">
+                <span class="highlight-text">◆オフ◆</span>
+            </div>
+            <div class="info-text">▼メニューをお選びください▼</div>
+            <div class="symptoms">
+                <button type="button" onclick="selectSymptom(this, 'treatment_off_1')" data-category="オフ"
+                    data-price="0">ジェルオフ</button>
             </div>
         </div>
 
@@ -1206,7 +1218,8 @@
             '甘皮ケア': 60,
             '角質ケア': 60,
             'フットジェル': 90,
-            'かかと美人 うる艶コース': 70
+            'かかと美人 うる艶コース': 70,
+            'ジェルオフ': 60
         };
 
 
@@ -1425,6 +1438,8 @@
                     html = `<div style="text-align: left;"><strong>所要時間：60分</strong><br>・フットバス<br>・甘皮ケア<br>・爪の長さ・形整え<br>・ジェルネイル施術<br>・保湿仕上げ<br>※デザインやオフの有無により施術時間が前後する場合がございます</div><div style="text-align: right;"><strong>料金：¥8,800〜</strong></div>`;
                 } else if (treatmentId === 'treatment_foot_2') {
                     html = `<div style="text-align: left;"><strong>所要時間：50分</strong><br>・フットバス<br>・足裏角質ケア<br>・かかとの硬くなった角質除去<br>・保湿トリートメント<br>・仕上げの保湿ケア<br>※お時間が前後する場合がございます</div><div style="text-align: right;"><strong>料金：¥5,980</strong><br>※フットジェル施術の方限定 ¥4,400</div>`;
+                } else if (treatmentId === 'treatment_off_1') {
+                    html = `<div style="text-align: left;"><strong>所要時間：40分</strong><br>ジェルをオフしていきます。<br>※お時間が前後する場合がございます</div>`;
                 }
 
                 // 内容が用意できた時だけ移動＆表示
